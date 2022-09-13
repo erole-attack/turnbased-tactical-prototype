@@ -6,6 +6,12 @@
 	const sketch = (p5) => {
 		p5.setup = () => {
 			p5.createCanvas(p5.windowWidth, p5.windowHeight);
+			for (let x = 1; x < 21; x++) {
+				for (let y = 1; y < 21; y++) {
+					p5.fill(getDefaultTint(x, y));
+					p5.square(squareSide * x, squareSide * y, squareSide);
+				}
+			}
 		};
 
 		p5.draw = () => {
