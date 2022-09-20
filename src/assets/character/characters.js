@@ -6,7 +6,7 @@ import ShepherdsCrook from '$images/shepherds-crook.svg';
 import SwordBrandish from '$images/sword-brandish.svg';
 import SkullStaff from '$images/skull-staff.svg';
 import Pincers from '$images/pincers.svg';
-import BattleAxe from '$images/battke-axe.svg';
+import BattleAxe from '$images/battle-axe.svg';
 
 export const assassin = new Character('assassin', 3, 1, Sai);
 export const archer = new Character('archer', 4, 2, BowArrow);
