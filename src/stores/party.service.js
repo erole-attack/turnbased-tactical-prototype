@@ -3,6 +3,9 @@ import { changePhase } from '$stores/phase.service';
 import { setBoardToCharacterPlacementMode } from '$stores/board.service';
 
 export const confirmParty = (player, characters) => {
+	characters.forEach((character) => {
+		character.player = player;
+	});
 	player === 1 && partyP1.set(characters);
 	player === 2 && partyP2.set(characters);
 	changePhase('character placement');

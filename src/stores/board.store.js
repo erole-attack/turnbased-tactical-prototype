@@ -6,7 +6,6 @@ export const squareSide = (p5) => p5.windowWidth / 2 / gridSideSquares;
 
 export const board = writable((p5) => {
 	p5.draw = () => {
-		p5.background(100);
 		for (let x = 1; x <= gridSideSquares; x++) {
 			for (let y = 1; y <= gridSideSquares; y++) {
 				p5.fill(getDefaultTileColor(x, y));

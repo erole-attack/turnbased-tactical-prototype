@@ -4,7 +4,6 @@ import { initiativeOrder } from '$stores/party.store';
 export const setBoardToCharacterPlacementMode = () => {
 	board.set((p5) => {
 		p5.draw = () => {
-			p5.background(100);
 			for (let x = 1; x <= gridSideSquares; x++) {
 				for (let y = 1; y <= gridSideSquares; y++) {
 					toBePlacedCharacters().length > 0
@@ -16,13 +15,13 @@ export const setBoardToCharacterPlacementMode = () => {
 								getDefaultTileColor(x, y, 'rgba(100%,60%,60%,1)', 'rgba(100%,90%,90%,1)')
 						  )
 						: p5.fill(getDefaultTileColor(x, y));
-					getCharacterPositions(p5, x, y);
 					p5.square(squareSide(p5) * x, squareSide(p5) * y, squareSide(p5));
+					getCharacterPositions(p5, x, y);
 				}
 			}
 		};
 		p5.mousePressed = () => {
-			isValidPlacementField(p5) &&
+			if (isValidPlacementField(p5) && toBePlacedCharacters().length > 0) {
 				initiativeOrder.update((party) => {
 					party[0].position = {
 						x: Math.floor(Math.floor(p5.mouseX) / squareSide(p5)),
@@ -31,6 +30,7 @@ export const setBoardToCharacterPlacementMode = () => {
 					party.push(party.shift());
 					return party;
 				});
+			}
 		};
 	});
 };
@@ -73,6 +73,10 @@ const showCharacterPlacementField = (p5, x, y, authorizedColor, disqualifiedColo
 
 const isValidPlacementField = (p5) => {
 	let isValid = false;
+	let characters;
+	initiativeOrder.subscribe((party) => {
+		characters = party.filter((character) => character.position);
+	});
 	for (let x = 1; x <= gridSideSquares; x++) {
 		for (let y = 1; y <= gridSideSquares; y++) {
 			if (y >= gridSideSquares / 2 - 4) {
@@ -86,6 +90,16 @@ const isValidPlacementField = (p5) => {
 						) {
 							isValid = true;
 						}
+						characters.forEach((character) => {
+							if (
+								p5.mouseX > squareSide(p5) * character.position.x &&
+								p5.mouseX < squareSide(p5) * character.position.x + squareSide(p5) &&
+								p5.mouseY > squareSide(p5) * character.position.y &&
+								p5.mouseY < squareSide(p5) * character.position.y + squareSide(p5)
+							) {
+								isValid = false;
+							}
+						});
 					}
 				}
 			}

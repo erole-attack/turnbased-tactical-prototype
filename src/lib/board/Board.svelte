@@ -31,6 +31,7 @@
 
 		p5.windowResized = () => {
 			p5.resizeCanvas(p5.windowWidth / 2 + 2 * squareSide(p5), p5.windowHeight);
+			p5.background(100);
 		};
 	};
 </script>

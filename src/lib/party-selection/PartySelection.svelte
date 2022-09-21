@@ -2,6 +2,7 @@
 	import CharacterSelection from '$lib/party-selection/CharacterSelection.svelte';
 	import { characters } from '$assets/character/characters';
 	import { confirmParty } from '$stores/party.service.js';
+	import { player } from '$stores/player.store.js';
 
 	let selected = [];
 	let selectedCharacters = [];
@@ -21,7 +22,9 @@
 	{/each}
 </div>
 
-<button disabled={!partyIsFull} on:click={confirmParty(1, selectedCharacters)}>Start game</button>
+<button disabled={!partyIsFull} on:click={confirmParty($player, selectedCharacters)}
+	>Start game</button
+>
 
 <style>
 	.options {
